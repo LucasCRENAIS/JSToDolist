@@ -9,5 +9,13 @@ let handler ={
         }else{
             task.createTask(TaskToAdd)
         }
+        document.querySelector("#task-form input").value = ''
+    },
+
+    handleDeleteTask: function(event){
+
+        event.preventDefault();
+        let TaskToDelete = document.querySelector("#task-form input").value
+        task.deleteTask(TaskToDelete)
     }
 }
