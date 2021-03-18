@@ -12,10 +12,10 @@ let handler ={
         task.resetInput();
     },
 
-    handleDeleteTask: function(event){
+    handleArchiveTask: function(event){
 
-        let TaskDotDelete = event.currentTarget;
-        let TaskParentToDelete = TaskDotDelete.closest("#listedTasks>li")
-        TaskParentToDelete.remove()
+        let TasktoArchive = event.currentTarget;
+        let TaskParentToArchive = TasktoArchive.closest("#listedTasks>li")
+        task.archiveTask(TaskParentToArchive)
     }
 }
