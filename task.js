@@ -11,8 +11,7 @@ let task ={
         newTask.appendChild(newButton)
 
         // pour chaque bouton de suppression crée, on branche un écouteur d'évennement
-        let deleteButton = document.querySelector("li>button")
-        deleteButton.addEventListener('click', handler.handleDeleteTask)        
+        newButton.addEventListener('click', handler.handleDeleteTask)        
     },
 
     deleteTask: function(TaskToDelete){
