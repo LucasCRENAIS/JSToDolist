@@ -9,12 +9,20 @@ let task ={
         newButton.innerText  = 'Supprimer'
         list.appendChild(newTask)
         newTask.appendChild(newButton)
+
+        // pour chaque bouton de suppression crée, on branche un écouteur d'évennement
+        let deleteButton = document.querySelector("li>button")
+        deleteButton.addEventListener('click', handler.handleDeleteTask)        
     },
 
-    deleteTask: function(newTask){
+    deleteTask: function(TaskToDelete){
 
         let list = document.querySelector("#listedTasks");
-        list.removeChild(newTask)
+        list.removeChild(TaskToDelete)
+    },
+
+    resetInput: function(){
+        document.querySelector("#task-form input").value = ''
     }
 
 }

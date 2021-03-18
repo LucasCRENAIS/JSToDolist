@@ -1,16 +1,19 @@
 let app = {
    init: function(){
-       let taskForm = document.querySelector("#task-form")
-       taskForm.addEventListener('submit', handler.handleSubmitTaskForm);
 
-       app.deleteTask();
+    app.BindButtons()
+
    },
 
-   deleteTask: function (){
-        deleteButton = document.querySelector("li>button")
-        deleteButton.addEventListener('click', handler.handleDeleteTask)
-        
-   }
+   BindButtons: function(){
+
+        let taskForm = document.querySelector("#task-form")
+        taskForm.addEventListener('submit', handler.handleSubmitTaskForm);
+
+
+   },
+
+
 }
 
 document.addEventListener('DOMContentLoaded', app.init);
