@@ -42,6 +42,11 @@ let task ={
 
     },
 
+    modifyTask: function(TaskToArchive){
+
+
+    },
+
     resetInput: function(){
         document.querySelector("#task-form input").value = ''
     }
