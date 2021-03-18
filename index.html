@@ -4,17 +4,22 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
     <title>ToDolist</title>
 </head>
 <body>
-    <form id="task-form">
-        <h2>ToDolist</h2>
-        <input type="text" name="task" placeholder="Entrez une tâche à ajouter">
-        <button>Ajouter</button>
-    </form>
-    <br>
-    <div id="listedTasks"></div>
-    <div id="archivedTasks"></div>
+    <div class="container is-fluid">
+        <div class="column">
+            <form id="task-form">
+                <h2 class="title is-4">ToDolist</h2>
+                <input class="input" type="text" name="task" placeholder="Entrez une tâche à ajouter">            
+                <button class="button is-primary mt-3">Ajouter</button>
+            </form>
+        </div>
+        <br>
+        <div class ="column" id="listedTasks"></div>
+        <div class ="column" id="archivedTasks"></div>
+    </div>
 </body>
 <script src="app.js"></script>
 <script src="handler.js"></script>

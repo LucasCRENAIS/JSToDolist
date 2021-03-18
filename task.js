@@ -7,10 +7,10 @@ let task ={
         newTask.className = 'task';
         newTask.innerText = content;
         // on rend le contenu éditable ! (comme Trello)
-        newTask.setAttribute('contenteditable', 'true')
-        
+        newTask.contentEditable = "true"
         let newButton = document.createElement('button');
         newButton.innerText  = 'Archiver'
+        newButton.className = 'button is-warning'
         list.appendChild(newTask)
         newTask.appendChild(newButton)
 
@@ -33,6 +33,7 @@ let task ={
             let archiveSection = document.createElement('h2')
             archiveDiv.appendChild(archiveSection)
             archiveSection.innerText  = 'Tâches archivées'
+            archiveSection.className  = 'title is-4'
             archiveSection.id = "archive-title"
         }
         // et on y place la tâche
@@ -40,12 +41,7 @@ let task ={
         newArchive.innerText  = TaskToArchive
         archiveDiv.append(TaskToArchive)
         // on remplace le texte du bouton
-        TaskToArchive.querySelector('button').innerText = 'Effacer'
-    },
-
-    modifyTask: function(TasktoModify){
-
-
+        TaskToArchive.querySelector('button').className = 'delete'
     },
 
     resetInput: function(){
