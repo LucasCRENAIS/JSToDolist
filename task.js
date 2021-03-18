@@ -6,6 +6,9 @@ let task ={
         let newTask = document.createElement('li');
         newTask.className = 'task';
         newTask.innerText = content;
+        // on rend le contenu éditable ! (comme Trello)
+        newTask.setAttribute('contenteditable', 'true')
+        
         let newButton = document.createElement('button');
         newButton.innerText  = 'Archiver'
         list.appendChild(newTask)
