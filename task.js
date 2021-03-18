@@ -19,10 +19,7 @@ let task ={
     },
 
     archiveTask: function(TaskToArchive){
-        //  on remplace le texte du bouton
-        let replaceButton = document.querySelector("#listedTasks>li button")
-        replaceButton.innerText = 'Effacer'
-
+        
         // on supprime la tâche de la ToDolist
         let list = document.querySelector("#listedTasks");
         list.removeChild(TaskToArchive)
@@ -39,10 +36,11 @@ let task ={
         newArchive = document.createElement('li')
         newArchive.innerText  = TaskToArchive
         archiveDiv.append(TaskToArchive)
-
+        // on remplace le texte du bouton
+        TaskToArchive.querySelector('button').innerText = 'Effacer'
     },
 
-    modifyTask: function(){
+    modifyTask: function(TasktoModify){
 
 
     },

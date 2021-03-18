@@ -21,8 +21,7 @@ let handler ={
 
     handleModifyTask: function(event){
 
-        let TasktoArchive = event.currentTarget;
-        let TaskParentToArchive = TasktoArchive.closest("#listedTasks>li")
-        task.archiveTask(TaskParentToArchive)
+        let TasktoModify = event.currentTarget;
+        task.modifyTask(TasktoModify)
     }
 }
