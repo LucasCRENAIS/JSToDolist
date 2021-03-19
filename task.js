@@ -2,23 +2,26 @@ let task ={
 
     createTask: function(content){
 
+        let taskTemplate = document.getElementById('newtask-template')
+        let newTask = taskTemplate.content.cloneNode(true);
+        let label = document.createElement('label')
+        label.appendChild(document.createTextNode(content));
+
+        // on peut rendre le contenu éditable ! (comme Trello)
+        // newTask.contentEditable = "true"
+        // let newButton = document.createElement('button');
+        // newButton.innerText  = 'Archiver'
+        // newButton.className = 'button is-warning'
+        
         let list = document.querySelector("#listedTasks");
-        let newTask = document.createElement('li');
-        newTask.className = 'task';
-        newTask.innerText = content;
-        // on rend le contenu éditable ! (comme Trello)
-        newTask.contentEditable = "true"
-        let newButton = document.createElement('button');
-        newButton.innerText  = 'Archiver'
-        newButton.className = 'button is-warning'
         list.appendChild(newTask)
-        newTask.appendChild(newButton)
+        let task = document.querySelector(":last-child.task .checkbox")
+        task.appendChild(label)
+        // newTask.appendChild(newButton)
 
         // pour chaque bouton de suppression crée, on branche un écouteur d'évennement
-        newButton.addEventListener('click', handler.handleArchiveTask)
+        // newButton.addEventListener('click', handler.handleArchiveTask)
         
-        // on branche un écouteur d'évennement sur chaque tâche pour la rendre éditable
-        document.querySelector("#listedTasks>li").addEventListener('click', handler.handleModifyTask)
     },
 
     archiveTask: function(TaskToArchive){

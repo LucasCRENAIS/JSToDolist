@@ -15,7 +15,7 @@ let handler ={
     handleArchiveTask: function(event){
 
         let TasktoArchive = event.currentTarget;
-        let TaskParentToArchive = TasktoArchive.closest("#listedTasks>li")
+        let TaskParentToArchive = TasktoArchive.closest("#listedTasks>checkbox")
         task.archiveTask(TaskParentToArchive)
     }
 }
