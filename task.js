@@ -15,7 +15,7 @@ let task ={
         let task = document.querySelector("#listedTasks :last-child .newtask.checkbox")
 
         // on met un eventListener sur les checkboxes
-        checkbox = document.querySelector('#listedTasks,#archivedTasks :last-child .newtask.checkbox input[type="checkbox"]')
+        checkbox = document.querySelector('#listedTasks :last-child .newtask.checkbox input[type="checkbox"]')
         checkbox.onchange = handler.handleCheckBoxEvent;   
 
         task.appendChild(label)
@@ -50,7 +50,26 @@ let task ={
         // newTask.appendChild(newButton)
         // pour chaque bouton de suppression crée, on branche un écouteur d'évennement
         // newButton.addEventListener('click', handler.handleArchiveTask)
+    },
 
+    unarchiveTask: function(TaskToUnArchive){
+        
+        let listDiv = document.querySelector("#listedTasks")
+        // on clone la tâche à déplacer et on change son background en gris
+        listDiv.appendChild(TaskToUnArchive.cloneNode(true)).className = "task box has-background-grey-lighter"
+
+        // on lui remet un écouteur d'évennement
+        checkbox = document.querySelector('#listedTasks :last-child .newtask.checkbox input[type="checkbox"]')
+        checkbox.onchange = handler.handleCheckBoxEvent;   
+        
+        // on supprime l'ancienne tâche
+        let list = document.querySelector("#archivedTasks")
+        list.removeChild(TaskToUnArchive)
+
+        //** Bouton de suppression */
+        // newTask.appendChild(newButton)
+        // pour chaque bouton de suppression crée, on branche un écouteur d'évennement
+        // newButton.addEventListener('click', handler.handleArchiveTask)
     },
 
     resetInput: function(){
