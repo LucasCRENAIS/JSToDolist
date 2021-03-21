@@ -8,47 +8,52 @@ let task ={
         label.appendChild(document.createTextNode(content));
 
         // on peut rendre le contenu éditable ! (comme Trello)
-        // newTask.contentEditable = "true"
-        // let newButton = document.createElement('button');
-        // newButton.innerText  = 'Archiver'
-        // newButton.className = 'button is-warning'
+        label.contentEditable = "true"
         
         let list = document.querySelector("#listedTasks");
         list.appendChild(newTask)
-        let task = document.querySelector(":last-child.task .checkbox")
-        task.appendChild(label)
-        // newTask.appendChild(newButton)
+        let task = document.querySelector("#listedTasks :last-child .newtask.checkbox")
 
-        // pour chaque bouton de suppression crée, on branche un écouteur d'évennement
-        // newButton.addEventListener('click', handler.handleArchiveTask)
+        // on met un eventListener sur les checkboxes
+        checkbox = document.querySelector('#listedTasks :last-child .newtask.checkbox input[type="checkbox"]')
+        checkbox.onchange = handler.handleCheckBoxEvent;   
+
+        task.appendChild(label)
         
     },
 
     archiveTask: function(TaskToArchive){
         
-        // on supprime la tâche de la ToDolist
-        let list = document.querySelector("#listedTasks");
-        list.removeChild(TaskToArchive)
         // si elle n'existe pas déjà, on crée une section dédiées aux tâches archivées
         let archiveDiv = document.querySelector("#archivedTasks")
         if (document.getElementById('archive-title') == null)
         {
             let archiveSection = document.createElement('h2')
             archiveDiv.appendChild(archiveSection)
-            archiveSection.innerText  = 'Tâches archivées'
+            archiveSection.innerText  = 'Tâches complétées'
             archiveSection.className  = 'title is-4'
             archiveSection.id = "archive-title"
         }
-        // et on y place la tâche
-        newArchive = document.createElement('li')
-        newArchive.innerText  = TaskToArchive
-        archiveDiv.append(TaskToArchive)
-        // on remplace le texte du bouton
-        TaskToArchive.querySelector('button').className = 'delete'
+        
+        // on clone la tâche à déplacer et on hange son background en jaune
+        archiveDiv.appendChild(TaskToArchive.cloneNode(true)).className = "task box has-background-warning"
+        
+        // on supprime l'ancienne tâche
+        let list = document.querySelector("#listedTasks")
+        list.removeChild(TaskToArchive)
+        
+        // on lui assigne un écouteur d'évennement
+        checkbox = document.querySelector('#listedTasks :last-child .newtask.checkbox input[type="checkbox"]')
+        checkbox.onchange = handler.handleCheckBoxEvent;   
+
+        //** Bouton de suppression */
+        // newTask.appendChild(newButton)
+        // pour chaque bouton de suppression crée, on branche un écouteur d'évennement
+        // newButton.addEventListener('click', handler.handleArchiveTask)
+
     },
 
     resetInput: function(){
         document.querySelector("#task-form input").value = ''
     }
-
 }

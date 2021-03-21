@@ -7,8 +7,9 @@ let app = {
 
    BindButtons: function(){
 
-        let taskForm = document.querySelector("#task-form")
-        taskForm.addEventListener('submit', handler.handleSubmitTaskForm);
+      let taskForm = document.querySelector("#task-form")
+      taskForm.addEventListener('submit', handler.handleSubmitTaskForm);
+      
    },
 }
 

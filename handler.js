@@ -12,10 +12,9 @@ let handler ={
         task.resetInput();
     },
 
-    handleArchiveTask: function(event){
-
+    handleCheckBoxEvent: function(event){
         let TasktoArchive = event.currentTarget;
-        let TaskParentToArchive = TasktoArchive.closest("#listedTasks>checkbox")
+        let TaskParentToArchive = TasktoArchive.closest("#listedTasks > div.task.box.has-background-grey-lighter")
         task.archiveTask(TaskParentToArchive)
     }
 }
