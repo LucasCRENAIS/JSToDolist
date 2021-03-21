@@ -15,14 +15,18 @@ let handler ={
     handleCheckBoxEvent: function(event){
         let TasktoArchive = event.currentTarget;
 
-        if (TasktoArchive.closest("#listedTasks > div.task.box.has-background-grey-lighter") !== null){
-            let TaskParentToArchive = TasktoArchive.closest("#listedTasks > div.task.box.has-background-grey-lighter")
+        if (TasktoArchive.closest("#listedTasks > div.notification.task.box.has-background-grey-lighter") !== null){
+            let TaskParentToArchive = TasktoArchive.closest("#listedTasks > div.notification.task.box.has-background-grey-lighter")
             task.archiveTask(TaskParentToArchive)
         }
 
-        if (TasktoArchive.closest("#archivedTasks > div.task.box.has-background-warning") !== null) {
-            let TaskParentToUnArchive = TasktoArchive.closest("#archivedTasks > div.task.box.has-background-warning")
+        if (TasktoArchive.closest("#archivedTasks > div.notification.task.box.has-background-warning") !== null) {
+            let TaskParentToUnArchive = TasktoArchive.closest("#archivedTasks > div.notification.task.box.has-background-warning")
             task.unarchiveTask(TaskParentToUnArchive)
         }
+    },
+
+    handleDeleteButton: function(event){
+        task.deleteTask(event.currentTarget.closest("div>.notification"))
     }
 }
