@@ -41,6 +41,9 @@ let task ={
         
         // on clone la tâche à déplacer et on change son background en jaune
         archiveDiv.appendChild(TaskToArchive.cloneNode(true)).className = "notification task box has-background-warning"
+
+        // on raye la tâche
+        document.querySelector("#archivedTasks :last-child label :last-child ").style = "text-decoration:line-through"
         
         // on supprime l'ancienne tâche
         let list = document.querySelector("#listedTasks")
@@ -62,6 +65,8 @@ let task ={
         // on clone la tâche à déplacer et on change son background en gris
         listDiv.appendChild(TaskToUnArchive.cloneNode(true)).className = "notification task box has-background-grey-lighter"
 
+        // on déraye la tâche
+        document.querySelector("#listedTasks :last-child label :last-child ").style = ""
         // on lui remet un écouteur d'évennement sur la checkbox
         checkbox = document.querySelector('#listedTasks :last-child .newtask.checkbox input[type="checkbox"]')
         checkbox.onchange = handler.handleCheckBoxEvent;   
