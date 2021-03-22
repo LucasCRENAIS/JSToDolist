@@ -1,4 +1,4 @@
-const todos = [];
+let todos = [];
 
 let task ={
 
@@ -6,7 +6,6 @@ let task ={
 
         // on ajoute le texte de la tâche au tableau todos
         todos.push(content)
-        console.log(todos)
         this.addToLocalStorage(todos);
 
         let taskTemplate = document.getElementById('newtask-template')
@@ -29,11 +28,40 @@ let task ={
         deleteButton = document.querySelector('#listedTasks :last-child button.delete')
         deleteButton.onclick = handler.handleDeleteButton;  
         
-        task.appendChild(label)
-        
+        task.appendChild(label)        
     },
 
-    addToLocalStorage: function(todos){
+    loadTasks: function(content){
+
+        let taskTemplate = document.getElementById('newtask-template')
+        let newTask = taskTemplate.content.cloneNode(true);
+        let label = document.createElement('label')
+        label.appendChild(document.createTextNode(content));
+
+        // on peut rendre le contenu éditable ! (comme Trello)
+        label.contentEditable = "true"
+        
+        let list = document.querySelector("#listedTasks");
+        list.appendChild(newTask)
+        let task = document.querySelector("#listedTasks :last-child .newtask.checkbox")
+
+        // on met un eventListener sur les checkboxes
+        checkbox = document.querySelector('#listedTasks :last-child .newtask.checkbox input[type="checkbox"]')
+        checkbox.onchange = handler.handleCheckBoxEvent;   
+
+        // on met un eventListener sur le bouton delete
+        deleteButton = document.querySelector('#listedTasks :last-child button.delete')
+        deleteButton.onclick = handler.handleDeleteButton;  
+        
+        task.appendChild(label)        
+    },
+
+    addToLocalStorage: function(item){
+
+        const todos = {
+            id: Date.now(),
+            name: item,
+        }
         localStorage.setItem('todos', JSON.stringify(todos));
     },
 
@@ -70,7 +98,7 @@ let task ={
         let list = document.querySelector("#listedTasks")
         list.removeChild(TaskToArchive)
         
-        // on lui assigne un écouteur d'évennement sur la checkbox
+        // on assigne un écouteur d'évennement sur la checkbox
         checkbox = document.querySelector('#archivedTasks :last-child .newtask.checkbox input[type="checkbox"]')
         checkbox.onchange = handler.handleCheckBoxEvent;   
 
