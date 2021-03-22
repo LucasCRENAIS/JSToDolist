@@ -1,6 +1,13 @@
+const todos = [];
+
 let task ={
 
     createTask: function(content){
+
+        // on ajoute le texte de la tâche au tableau todos
+        todos.push(content)
+        console.log(todos)
+        this.addToLocalStorage(todos);
 
         let taskTemplate = document.getElementById('newtask-template')
         let newTask = taskTemplate.content.cloneNode(true);
@@ -24,6 +31,20 @@ let task ={
         
         task.appendChild(label)
         
+    },
+
+    addToLocalStorage: function(todos){
+        localStorage.setItem('todos', JSON.stringify(todos));
+    },
+
+    getFromLocalStorage: function() {
+        const reference = localStorage.getItem('todos');
+        // if reference exists
+        if (reference) {
+          // converts back to array and store it in todos array
+          todos = JSON.parse(reference);
+          return todos
+        }
     },
 
     archiveTask: function(TaskToArchive){
