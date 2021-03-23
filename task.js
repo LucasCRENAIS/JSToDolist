@@ -3,73 +3,57 @@ let todos = [];
 let task ={
 
     createTask: function(content){
-
-        // on ajoute le texte de la tâche au tableau todos
-        todos.push(content)
-        this.addToLocalStorage(todos);
-
-        let taskTemplate = document.getElementById('newtask-template')
-        let newTask = taskTemplate.content.cloneNode(true);
-        let label = document.createElement('label')
-        label.appendChild(document.createTextNode(content));
-
-        // on peut rendre le contenu éditable ! (comme Trello)
-        label.contentEditable = "true"
         
-        let list = document.querySelector("#listedTasks");
-        list.appendChild(newTask)
-        let task = document.querySelector("#listedTasks :last-child .newtask.checkbox")
-
-        // on met un eventListener sur les checkboxes
-        checkbox = document.querySelector('#listedTasks :last-child .newtask.checkbox input[type="checkbox"]')
-        checkbox.onchange = handler.handleCheckBoxEvent;   
-
-        // on met un eventListener sur le bouton delete
-        deleteButton = document.querySelector('#listedTasks :last-child button.delete')
-        deleteButton.onclick = handler.handleDeleteButton;  
-        
-        task.appendChild(label)        
-    },
-
-    loadTasks: function(content){
-
-        let taskTemplate = document.getElementById('newtask-template')
-        let newTask = taskTemplate.content.cloneNode(true);
-        let label = document.createElement('label')
-        label.appendChild(document.createTextNode(content));
-
-        // on peut rendre le contenu éditable ! (comme Trello)
-        label.contentEditable = "true"
-        
-        let list = document.querySelector("#listedTasks");
-        list.appendChild(newTask)
-        let task = document.querySelector("#listedTasks :last-child .newtask.checkbox")
-
-        // on met un eventListener sur les checkboxes
-        checkbox = document.querySelector('#listedTasks :last-child .newtask.checkbox input[type="checkbox"]')
-        checkbox.onchange = handler.handleCheckBoxEvent;   
-
-        // on met un eventListener sur le bouton delete
-        deleteButton = document.querySelector('#listedTasks :last-child button.delete')
-        deleteButton.onclick = handler.handleDeleteButton;  
-        
-        task.appendChild(label)        
-    },
-
-    addToLocalStorage: function(item){
-
-        const todos = {
+        let newTodo = {
             id: Date.now(),
-            name: item,
-        }
+            name: content,
+            completed: false
+        };
+        
+        // on ajoute le texte de la tâche au tableau todos
+        todos.push(newTodo)
+        // on passe ce tableau au localstorage
         localStorage.setItem('todos', JSON.stringify(todos));
+        let id = newTodo.id
+        // on passe le contenu à la fonction qui va charger la tâche sur la page
+        this.loadTasks(content, id)
+    },
+
+    loadTasks: function(content, id){
+
+        let taskTemplate = document.getElementById('newtask-template')
+        let newTask = taskTemplate.content.cloneNode(true);
+
+        let label = document.createElement('label')
+        label.appendChild(document.createTextNode(content));
+
+        // on peut rendre le contenu éditable ! (comme Trello)
+        label.contentEditable = "true"
+        
+        let list = document.querySelector("#listedTasks");
+        list.appendChild(newTask)
+        let task = document.querySelector("#listedTasks :last-child .newtask.checkbox")
+
+        // on met un eventListener sur les checkboxes
+        checkbox = document.querySelector('#listedTasks :last-child .newtask.checkbox input[type="checkbox"]')
+        checkbox.onchange = handler.handleCheckBoxEvent;   
+
+        // on met un eventListener sur le bouton delete
+        deleteButton = document.querySelector('#listedTasks :last-child button.delete')
+        deleteButton.onclick = handler.handleDeleteButton;  
+        
+        task.appendChild(label)
+        
+        // on donne un id à notre tâche
+        let taskId = document.querySelector('#listedTasks :last-child.notification.task.box.has-background-grey-lighter')
+        taskId.id = id
     },
 
     getFromLocalStorage: function() {
         const reference = localStorage.getItem('todos');
-        // if reference exists
+        // si il y a une entrée "todos" en 
         if (reference) {
-          // converts back to array and store it in todos array
+          // on reconverti cette entrée en tableau et on la stock dans le tableau "todos"
           todos = JSON.parse(reference);
           return todos
         }
@@ -87,7 +71,7 @@ let task ={
             archiveSection.className  = 'title is-4'
             archiveSection.id = "archive-title"
         }
-        
+       
         // on clone la tâche à déplacer et on change son background en jaune
         archiveDiv.appendChild(TaskToArchive.cloneNode(true)).className = "notification task box has-background-warning"
 
@@ -105,7 +89,6 @@ let task ={
         // on replace un eventListener sur le bouton delete
         deleteButton = document.querySelector('#archivedTasks :last-child button.delete')
         deleteButton.onclick = handler.handleDeleteButton;  
-
     },
 
     unarchiveTask: function(TaskToUnArchive){
@@ -137,7 +120,7 @@ let task ={
     deleteTask: function(taskToDelete){
 
         taskToDelete.remove()
-
+        // on enlève le titre de la section tâches archivées si cette dernière est vide
         if (document.querySelector('.task.box.has-background-warning') == null)
         {
             document.querySelector('#archive-title').remove()

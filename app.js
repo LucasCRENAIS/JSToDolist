@@ -14,9 +14,9 @@ let app = {
    },
 
    loadTodos: function(){
-      // todos.forEach('name', task.createTask('name'))
-      for (let index = 0; index < JSON.parse(localStorage.getItem('todos'))['name'].length; index++) {
-         task.loadTasks(JSON.parse(localStorage.getItem('todos'))['name'][index])         
+      task.getFromLocalStorage()
+      for (let index = 0; index < JSON.parse(localStorage.getItem('todos')).length; index++) {
+         task.loadTasks(JSON.parse(localStorage.getItem('todos'))[index]['name'])         
       }
    }
 }
