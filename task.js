@@ -15,12 +15,13 @@ let task ={
         // on passe ce tableau au localstorage
         localStorage.setItem('todos', JSON.stringify(todos));
         let id = newTodo.id
+        let completed = newTodo.completed
         // on passe le contenu à la fonction qui va charger la tâche sur la page
-        this.loadTasks(content, id)
+        this.loadTasks(content, id, completed)
     },
 
 
-    loadTasks: function(content, id){
+    loadTasks: function(content, id, completed){
 
         let taskTemplate = document.getElementById('newtask-template')
         let newTask = taskTemplate.content.cloneNode(true);
@@ -35,21 +36,36 @@ let task ={
         list.appendChild(newTask)
         let task = document.querySelector("#listedTasks :last-child .newtask.checkbox")
 
+        // si il s'agit d'une tâche archivée
+
         // on met un eventListener sur les checkboxes
         checkbox = document.querySelector('#listedTasks :last-child .newtask.checkbox input[type="checkbox"]')
         checkbox.onchange = handler.handleCheckBoxEvent;   
+
+        // si il s'agit d'un tâche achivée, on lui applique un visuel spécifique
+        if (completed === true) 
+        {
+            archivedTask = document.querySelector('#listedTasks :last-child.notification.task.box')
+            archivedTask.className = "notification task box has-background-warning"
+            archivedCheckbox = document.querySelector('#listedTasks :last-child .newtask.checkbox input[type="checkbox"]')
+            archivedCheckbox.checked = true
+        }
 
         // on met un eventListener sur le bouton delete
         deleteButton = document.querySelector('#listedTasks :last-child button.delete')
         deleteButton.onclick = handler.handleDeleteButton;  
         
         task.appendChild(label)
+
+
         
         // on donne un id à notre tâche
         if (id){
-            let taskId = document.querySelector('#listedTasks :last-child.notification.task.box.has-background-grey-lighter')
+            let taskId = document.querySelector('#listedTasks :last-child.notification.task.box')
             taskId.id = id
         }
+
+
     },
 
     getFromLocalStorage: function() {
@@ -98,22 +114,35 @@ let task ={
     },
 
     toggleStatus : function(status, id) {
+        
+        // on décode les données su localstorage (
         item = JSON.parse(localStorage.getItem('todos'))
-        item.forEach(element => {
-            
-            if (id == element.id && status != element.completed)
+
+        // si il y a des données décodées
+        item != null
+
+        // on sait que c'est un tableau qui est stocké donc on parcours chaque index
+        for (let index = 0; index < item.length; index++) {
+            const element = item[index];
+            // si un des id correspond à l'id en paramètre
+            if (id == element.id)
             {
+            // on construit un nouvel objet qui contient le status fourni en paramètre
+            // pour remplir les autres valeurs on récupère les données déjà existantes 
                 let newStatus = 
                 {
                     id: element.id,
                     name: element.name,
                     completed: status
                 };
-                console.log(JSON.stringify(element))
-                todos.push(newStatus)                               
+
+                // on place cet objet a l'index courant dans le tableau todos
+                todos.splice(index, 1, newStatus)    
+                // on encode ce tableau en JSON et on le stocke dans le localStorage  
                 localStorage.setItem('todos', JSON.stringify(todos));
+
             }
-        });
+        }
     },
 
     unarchiveTask: function(TaskToUnArchive, id){

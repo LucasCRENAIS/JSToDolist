@@ -27,6 +27,6 @@ let handler ={
     },
 
     handleDeleteButton: function(event){
-        task.deleteTask(event.currentTarget.closest("div>.notification"))
+        task.deleteTask(event.currentTarget.closest("div>.notification").id)
     }
 }

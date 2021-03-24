@@ -16,7 +16,11 @@ let app = {
    loadTodos: function(){
       task.getFromLocalStorage()
       for (let index = 0; index < JSON.parse(localStorage.getItem('todos')).length; index++) {
-         task.loadTasks(JSON.parse(localStorage.getItem('todos'))[index]['name'])         
+      // on charge les tâches, leurs id, leurs status
+         let content = JSON.parse(localStorage.getItem('todos'))[index]['name']
+         let id = JSON.parse(localStorage.getItem('todos'))[index]['id']
+         let completed = JSON.parse(localStorage.getItem('todos'))[index]['completed']
+         task.loadTasks(content, id, completed)         
       }
    }
 }
