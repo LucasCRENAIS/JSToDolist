@@ -35,7 +35,9 @@ let task ={
         list.appendChild(newTask)
         let task = document.querySelector("#listedTasks :last-child .newtask.checkbox")
 
-        // si il s'agit d'une tâche archivée
+        // on met un eventListener sur le bouton delete
+        deleteButton = document.querySelector('#listedTasks :last-child button.delete')
+        deleteButton.onclick = handler.handleDeleteButton;  
 
         // on met un eventListener sur les checkboxes
         checkbox = document.querySelector('#listedTasks :last-child .newtask.checkbox input[type="checkbox"]')
@@ -49,10 +51,6 @@ let task ={
             archivedCheckbox = document.querySelector('#listedTasks :last-child .newtask.checkbox input[type="checkbox"]')
             archivedCheckbox.checked = true
         }
-
-        // on met un eventListener sur le bouton delete
-        deleteButton = document.querySelector('#listedTasks :last-child button.delete')
-        deleteButton.onclick = handler.handleDeleteButton;  
         
         task.appendChild(label)
         
@@ -119,41 +117,36 @@ let task ={
 
     deleteTask: function(taskToDelete, id){
 
-          // on décode les données su localstorage (
-            item = JSON.parse(localStorage.getItem('todos'))
+    // on décode les données su localstorage (
+    item = JSON.parse(localStorage.getItem('todos'))
 
-            // si il y a des données décodées
-            item != null
-    
-            // on sait que c'est un tableau qui est stocké donc on parcours chaque index
-            for (let index = 0; index < item.length; index++) {
-                const element = item[index];
-                // si un des id correspond à l'id en paramètre
-                if (id == element.id)
-                {
-                    // on supprime cet objet de l'index courant dans le tableau todos
-                    todos.pop(index)    
-                    // on encode ce tableau en JSON et on le replace dans le localStorage  
-                    localStorage.setItem('todos', JSON.stringify(todos));
-                    // on supprime la carte correspondante
-                    console.log(taskToDelete)
-                    taskToDelete.className = "slide-out-bck-center notification task box has-background-danger"
-                    let divToDelete = document.getElementById(id)
-                    divToDelete.addEventListener("animationend", (ev) => {
-                        taskToDelete.remove()
-                    })
-                    
-                }
+    // si il y a des données décodées
+    item != null
+
+        // on sait que c'est un tableau qui est stocké donc on parcours chaque index
+        for (let index = 0; index < item.length; index++) 
+        {
+            const element = item[index];
+            // si un des id correspond à l'id en paramètre
+            if (id == element.id)
+            {
+                // on supprime cet objet de l'index courant dans le tableau todos
+                todos.splice(index, 1)    
+                // on encode ce tableau en JSON et on le replace dans le localStorage  
+                localStorage.setItem('todos', JSON.stringify(todos));
+                // on supprime la carte correspondante
+                taskToDelete.className = "slide-out-bck-center notification task box has-background-danger"
+                let divToDelete = document.getElementById(id)
+                // on attend la fin de l'animation pour supprimer la div
+                divToDelete.addEventListener("animationend",
+                (ev) => {
+                    taskToDelete.remove()
+                })                
             }
-
-        // on enlève le titre de la section tâches archivées si cette dernière est vide
-        // if (document.querySelector('.task.box.has-background-warning') == null)
-        // {
-        //     document.querySelector('#archive-title').remove()
-        // }
+        }
     },
 
     resetInput: function(){
         document.querySelector("#task-form input").value = ''
-    }
+    },
 }

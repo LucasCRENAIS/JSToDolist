@@ -52,10 +52,18 @@ input[type=checkbox]:checked {
   fill: #00d1b26e;
 }
 
+.has-background-warning {
+  transition-duration: 0.3s;
+}
+
+.has-background-grey-lighter {
+  transition-duration: 0.3s;
+}
+
 .has-background-warning label{
   text-decoration: line-through;
-  transition: 1s;
 }
+
 
 /**
  * ----------------------------------------
@@ -164,6 +172,23 @@ input[type=checkbox]:checked {
 	animation: bounce-top 0.7s both;
 }
 
+/**
+ * ----------------------------------------
+ * animation fade-in
+ * ----------------------------------------
+ */
+ @keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+	animation: fade-in 1.5s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+}
 
 /**
  * ----------------------------------------
