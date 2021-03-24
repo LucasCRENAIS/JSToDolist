@@ -20,7 +20,6 @@ let task ={
         this.loadTasks(content, id, completed)
     },
 
-
     loadTasks: function(content, id, completed){
 
         let taskTemplate = document.getElementById('newtask-template')
@@ -46,7 +45,7 @@ let task ={
         if (completed === true) 
         {
             archivedTask = document.querySelector('#listedTasks :last-child.notification.task.box')
-            archivedTask.className = "notification task box has-background-warning"
+            archivedTask.className = "slide-right notification task box has-background-warning"
             archivedCheckbox = document.querySelector('#listedTasks :last-child .newtask.checkbox input[type="checkbox"]')
             archivedCheckbox.checked = true
         }
@@ -56,16 +55,12 @@ let task ={
         deleteButton.onclick = handler.handleDeleteButton;  
         
         task.appendChild(label)
-
-
         
         // on donne un id à notre tâche
         if (id){
             let taskId = document.querySelector('#listedTasks :last-child.notification.task.box')
             taskId.id = id
         }
-
-
     },
 
     getFromLocalStorage: function() {
@@ -79,38 +74,15 @@ let task ={
     },
 
     archiveTask: function(TaskToArchive, id){
-        
-        // si elle n'existe pas déjà, on crée une section dédiées aux tâches archivées
-        // let archiveDiv = document.querySelector("#archivedTasks")
-        // if (document.getElementById('archive-title') == null)
-        // {
-        //     let archiveSection = document.createElement('h2')
-        //     archiveDiv.appendChild(archiveSection)
-        //     archiveSection.innerText  = 'Tâches complétées'
-        //     archiveSection.className  = 'title is-4'
-        //     archiveSection.id = "archive-title"
-        // }
-       
-        // on clone la tâche à déplacer et on change son background en jaune
-        // archiveDiv.appendChild(TaskToArchive.cloneNode(true)).className = "notification task box has-background-warning"
-
-        // // on raye la tâche
-        // document.querySelector("#archivedTasks :last-child label :last-child ").style = "text-decoration:line-through"
-        
-        // // on supprime l'ancienne tâche
-        // let list = document.querySelector("#listedTasks")
-        // list.removeChild(TaskToArchive)
-        
-        // // on assigne un écouteur d'évennement sur la checkbox
-        // checkbox = document.querySelector('#archivedTasks :last-child .newtask.checkbox input[type="checkbox"]')
-        // checkbox.onchange = handler.handleCheckBoxEvent;   
-
-        // // on replace un eventListener sur le bouton delete
-        // deleteButton = document.querySelector('#archivedTasks :last-child button.delete')
-        // deleteButton.onclick = handler.handleDeleteButton;  
 
         TaskToArchive.className = "notification task box has-background-warning"
         this.toggleStatus(true, id)
+    },
+
+    unarchiveTask: function(TaskToUnArchive, id){
+        
+        TaskToUnArchive.className = "notification task box has-background-grey-lighter"
+        this.toggleStatus(false, id)
     },
 
     toggleStatus : function(status, id) {
@@ -145,43 +117,40 @@ let task ={
         }
     },
 
-    unarchiveTask: function(TaskToUnArchive, id){
-        
-        // let listDiv = document.querySelector("#listedTasks")
-        // // on clone la tâche à déplacer et on change son background en gris
-        // listDiv.appendChild(TaskToUnArchive.cloneNode(true)).className = "notification task box has-background-grey-lighter"
+    deleteTask: function(taskToDelete, id){
 
-        // // on déraye la tâche
-        // document.querySelector("#listedTasks :last-child label :last-child ").style = ""
-        // // on lui remet un écouteur d'évennement sur la checkbox
-        // checkbox = document.querySelector('#listedTasks :last-child .newtask.checkbox input[type="checkbox"]')
-        // checkbox.onchange = handler.handleCheckBoxEvent;   
+          // on décode les données su localstorage (
+            item = JSON.parse(localStorage.getItem('todos'))
 
-        // // on replace un eventListener sur le bouton delete
-        // deleteButton = document.querySelector('#listedTasks :last-child button.delete')
-        // deleteButton.onclick = handler.handleDeleteButton;  
-        
-        // // on supprime l'ancienne tâche
-        // let list = document.querySelector("#archivedTasks")
-        // list.removeChild(TaskToUnArchive)
+            // si il y a des données décodées
+            item != null
+    
+            // on sait que c'est un tableau qui est stocké donc on parcours chaque index
+            for (let index = 0; index < item.length; index++) {
+                const element = item[index];
+                // si un des id correspond à l'id en paramètre
+                if (id == element.id)
+                {
+                    // on supprime cet objet de l'index courant dans le tableau todos
+                    todos.pop(index)    
+                    // on encode ce tableau en JSON et on le replace dans le localStorage  
+                    localStorage.setItem('todos', JSON.stringify(todos));
+                    // on supprime la carte correspondante
+                    console.log(taskToDelete)
+                    taskToDelete.className = "slide-out-bck-center notification task box has-background-danger"
+                    let divToDelete = document.getElementById(id)
+                    divToDelete.addEventListener("animationend", (ev) => {
+                        taskToDelete.remove()
+                    })
+                    
+                }
+            }
 
+        // on enlève le titre de la section tâches archivées si cette dernière est vide
         // if (document.querySelector('.task.box.has-background-warning') == null)
         // {
         //     document.querySelector('#archive-title').remove()
         // }
-
-        TaskToUnArchive.className = "notification task box has-background-grey-lighter"
-        this.toggleStatus(false, id)
-    },
-
-    deleteTask: function(taskToDelete){
-
-        taskToDelete.remove()
-        // on enlève le titre de la section tâches archivées si cette dernière est vide
-        if (document.querySelector('.task.box.has-background-warning') == null)
-        {
-            document.querySelector('#archive-title').remove()
-        }
     },
 
     resetInput: function(){
