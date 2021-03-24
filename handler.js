@@ -32,4 +32,10 @@ let handler ={
         let id = event.currentTarget.closest("div>.notification").id
         task.deleteTask(taskToDelete , id)
     },
+
+    handleLabelUpdateEvent: function(event){
+        let labelUpdate = event.currentTarget
+        let id = document.querySelector("#listedTasks :last-child.task.box label > label").closest("div").id
+        task.updateTask(labelUpdate.innerText, id)
+    }
 }

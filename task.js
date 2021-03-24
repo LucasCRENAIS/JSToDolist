@@ -41,8 +41,8 @@ let task ={
 
         // on met un eventListener sur les checkboxes
         checkbox = document.querySelector('#listedTasks :last-child .newtask.checkbox input[type="checkbox"]')
-        checkbox.onchange = handler.handleCheckBoxEvent;   
-
+        checkbox.onchange = handler.handleCheckBoxEvent; 
+        
         // si il s'agit d'un tâche achivée, on lui applique un visuel spécifique
         if (completed === true) 
         {
@@ -53,6 +53,10 @@ let task ={
         }
         
         task.appendChild(label)
+
+        // on met un eventListener sur les labels
+        label = document.querySelector("#listedTasks :last-child.task.box label > label")
+        label.addEventListener('blur', handler.handleLabelUpdateEvent)
         
         // on donne un id à notre tâche
         if (id){
@@ -142,6 +146,37 @@ let task ={
                 (ev) => {
                     taskToDelete.remove()
                 })                
+            }
+        }
+    },
+
+    updateTask: function(name, id){
+    // on décode les données su localstorage (
+        item = JSON.parse(localStorage.getItem('todos'))
+
+        // si il y a des données décodées
+        item != null
+
+        // on sait que c'est un tableau qui est stocké donc on parcours chaque index
+        for (let index = 0; index < item.length; index++) {
+            const element = item[index];
+            // si un des id correspond à l'id en paramètre
+            if (id == element.id)
+            {
+            // on construit un nouvel objet qui contient le status fourni en paramètre
+            // pour remplir les autres valeurs on récupère les données déjà existantes 
+                let newName = 
+                {
+                    id: element.id,
+                    name: name,
+                    completed: element.completed
+                };
+
+                // on place cet objet a l'index courant dans le tableau todos
+                todos.splice(index, 1, newName)    
+                // on encode ce tableau en JSON et on le stocke dans le localStorage  
+                localStorage.setItem('todos', JSON.stringify(todos));
+
             }
         }
     },
