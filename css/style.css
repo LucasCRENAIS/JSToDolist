@@ -64,6 +64,15 @@ input[type=checkbox]:checked {
   text-decoration: line-through;
 }
 
+.fa-linkedin-in:hover{
+  color: #0a66c2;
+}
+
+a{
+  color: #c1c6cd
+}
+
+
 
 /**
  * ----------------------------------------
