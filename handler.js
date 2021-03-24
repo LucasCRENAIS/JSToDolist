@@ -17,12 +17,12 @@ let handler ={
 
         if (TasktoArchive.closest("#listedTasks > div.notification.task.box.has-background-grey-lighter") !== null){
             let TaskParentToArchive = TasktoArchive.closest("#listedTasks > div.notification.task.box.has-background-grey-lighter")
-            task.archiveTask(TaskParentToArchive)
-        }
-
-        if (TasktoArchive.closest("#archivedTasks > div.notification.task.box.has-background-warning") !== null) {
-            let TaskParentToUnArchive = TasktoArchive.closest("#archivedTasks > div.notification.task.box.has-background-warning")
-            task.unarchiveTask(TaskParentToUnArchive)
+            let id = TaskParentToArchive.id
+            task.archiveTask(TaskParentToArchive, id)
+        }else{
+            let TaskParentToUnArchive = TasktoArchive.closest("#listedTasks > div.notification.task.box.has-background-warning")
+            let id = TaskParentToUnArchive.id
+            task.unarchiveTask(TaskParentToUnArchive, id)
         }
     },
 

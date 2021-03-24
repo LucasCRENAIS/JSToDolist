@@ -51,3 +51,7 @@ input[type=checkbox]:checked {
 .custom-shape-divider-top-1616403053 .shape-fill {
   fill: #00d1b26e;
 }
+
+.has-background-warning label {
+  text-decoration: line-through;
+}
