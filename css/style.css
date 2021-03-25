@@ -68,6 +68,11 @@ input[type=checkbox]:checked {
   color: #0a66c2;
 }
 
+.fa-twitter:hover{
+  color: #1da1f2;
+}
+
+
 a{
   color: #c1c6cd
 }
