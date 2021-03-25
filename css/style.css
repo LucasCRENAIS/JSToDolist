@@ -60,6 +60,11 @@ input[type=checkbox]:checked {
   transition-duration: 0.3s;
 }
 
+.is-danger , .is-primary , input{
+  transition-duration: 0.3s;
+  
+}
+
 .has-background-warning label{
   text-decoration: line-through;
 }
@@ -237,6 +242,6 @@ a{
 }
 
 .shake-bottom {
-	animation: shake-bottom 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+	animation: shake-bottom 0.5s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
 }
 
