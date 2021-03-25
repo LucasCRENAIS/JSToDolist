@@ -74,7 +74,7 @@ let task ={
           return todos
         }
     },
-
+    // TODO : factoriser
     archiveTask: function(TaskToArchive, id){
 
         TaskToArchive.className = "notification task box has-background-warning"
@@ -89,7 +89,7 @@ let task ={
 
     toggleStatus : function(status, id) {
         
-        // on décode les données su localstorage (
+        // on décode les données du localstorage (
         item = JSON.parse(localStorage.getItem('todos'))
 
         // si il y a des données décodées
@@ -121,7 +121,7 @@ let task ={
 
     deleteTask: function(taskToDelete, id){
 
-    // on décode les données su localstorage (
+    // on décode les données du localstorage (
     item = JSON.parse(localStorage.getItem('todos'))
 
     // si il y a des données décodées
@@ -151,7 +151,7 @@ let task ={
     },
 
     updateTask: function(name, id){
-    // on décode les données su localstorage (
+    // on décode les données du localstorage (
         item = JSON.parse(localStorage.getItem('todos'))
 
         // si il y a des données décodées
@@ -163,7 +163,7 @@ let task ={
             // si un des id correspond à l'id en paramètre
             if (id == element.id)
             {
-            // on construit un nouvel objet qui contient le status fourni en paramètre
+            // on construit un nouvel objet qui contient le nom fourni en paramètre
             // pour remplir les autres valeurs on récupère les données déjà existantes 
                 let newName = 
                 {
@@ -171,12 +171,10 @@ let task ={
                     name: name,
                     completed: element.completed
                 };
-
                 // on place cet objet a l'index courant dans le tableau todos
                 todos.splice(index, 1, newName)    
                 // on encode ce tableau en JSON et on le stocke dans le localStorage  
                 localStorage.setItem('todos', JSON.stringify(todos));
-
             }
         }
     },
